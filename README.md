@@ -9,3 +9,6 @@ A simple tool to watch Job Details and Triggers.
 - 在applicationContext.xml中修改成你的数据库即可用
 
 - 随便写的，所以没有用Maven，差包的就抱歉啦。有空我会更新成Maven版本
+
+博客地址: <a>https://my.oschina.net/woooooody/blog</a>
+
