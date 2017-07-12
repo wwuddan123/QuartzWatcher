@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  		
+				 xmlns="http://www.springframework.org/schema/beans"
+		 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:aop="http://www.springframework.org/schema/aop"
+			   xmlns:p="http://www.springframework.org/schema/p" 
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<!-- 开启自动扫描Bean -->
+	<context:component-scan base-package="com" />
+	
+	<bean id="date" class="java.util.Date"></bean>
+	
+	<!-- 配置数据源连接池(使用C3P0开源数据源) -->
+	<bean id="dataSource" name="MySQL" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+		<!-- 指定连接数据库驱动 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+ 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/quartz_db" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		
+		<!-- 连接池的最大连接数 -->
+		<property name="maxPoolSize" value="20" />
+		<!-- 连接池的最小连接数 -->
+		<property name="minPoolSize" value="1" />
+		<!-- 初始化连接池的连接数(默认值为3) -->
+		<property name="initialPoolSize" value="2" />
+		<!-- 连接池连接的超时时长 -->
+		<property name="maxIdleTime" value="5000" />
+		<!-- 连接池批量创建连接数 -->
+		<property name="acquireIncrement" value="2" />
+		<!-- 连接池检测线程间隔检测时长 -->
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean>
+	
+	<!-- 配置JDBC事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 配置SqlSessionFactory工厂Bean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean ">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 取别名 -->
+		<property name="typeAliasesPackage" value="com.woooooody.entity" />
+	</bean>
+	
+	<!-- 配置SqlMapper接口(扫描模式,就不用写一个mapper就配一个mapper了) -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+		<property name="basePackage" value="com.woooooody.mapper" />
+	</bean>
+	
+	<!-- 配置Quartz -->
+	<!-- 
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+	</bean>
+	-->
+</beans>

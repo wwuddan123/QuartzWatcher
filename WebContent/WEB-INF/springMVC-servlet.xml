@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 			 xmlns="http://www.springframework.org/schema/beans"
+			 xmlns:mvc="http://www.springframework.org/schema/mvc"
+		 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:aop="http://www.springframework.org/schema/aop"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						">
+	<!-- context:应用上下文;mvc:SpringMVC -->
+	
+	<!-- 开启SpringMVC注解驱动(必配)  -->
+	<mvc:annotation-driven />
+	
+	<!-- 开启自动扫描Bean(必配)  -->
+	<context:component-scan base-package="com.woooooody" />
+	
+	<!-- 配置URL与Bean的名字间的映射(必配)  -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<!-- 配置Controller的适配器(必配)  -->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	<!-- 配置视图解析器(必配)  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 配置访问静态资源(必配) -->
+	<mvc:default-servlet-handler />
+	<!-- 开启AOP注解支持 -->
+	<aop:aspectj-autoproxy />
+	
+</beans>
+	
